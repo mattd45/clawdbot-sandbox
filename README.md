@@ -16,7 +16,7 @@ Run [OpenClaw](https://github.com/openclaw/openclaw) (formerly Moltbot, formerly
 The following Cloudflare features used by this project have free tiers:
 - Cloudflare Access (authentication)
 - Browser Rendering (for browser navigation)
-- AI Gateway (optional, for API routing/analytics)
+- AI Gateway (optional, for API routing/analytics)   
 - R2 Storage (optional, for persistence)
 
 ## What is OpenClaw?
