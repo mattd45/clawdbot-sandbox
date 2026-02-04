@@ -1,22 +1,67 @@
-"containers": [
-  {
-    "class_name": "Sandbox",
-    "image": "./Dockerfile",
-    "instance_type": "standard-4",
-    "max_instances": 1,
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "clawdbot-sandbox",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-05-06",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true
   },
-],
-"durable_objects": {
-  "bindings": [
+  "assets": {
+    "directory": "./dist/client",
+    "not_found_handling": "single-page-application",
+    "html_handling": "auto-trailing-slash",
+    "binding": "ASSETS",
+    "run_worker_first": true
+  },
+  "rules": [
+    {
+      "type": "Text",
+      "globs": ["**/*.html"],
+      "fallthrough": false
+    },
+    {
+      "type": "Data",
+      "globs": ["**/*.png"],
+      "fallthrough": false
+    }
+  ],
+  "build": {
+    "command": "npm run build"
+  },
+  "containers": [
     {
       "class_name": "Sandbox",
-      "name": "Sandbox",
-    },
+      "image": "./Dockerfile",
+      "instance_type": "standard-4",
+      "max_instances": 1
+    }
   ],
-},
-"migrations": [
-  {
-    "new_sqlite_classes": ["Sandbox"],
-    "tag": "v2",
+  "durable_objects": {
+    "bindings": [
+      {
+        "class_name": "Sandbox",
+        "name": "Sandbox"
+      }
+    ]
   },
-],
+  "migrations": [
+    {
+      "new_sqlite_classes": ["Sandbox"],
+      "tag": "v2"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MOLTBOT_BUCKET",
+      "bucket_name": "moltbot-storage",
+      "preview_bucket_name": "moltbot-storage"
+    }
+  ],
+  "triggers": {
+    "crons": ["*/5 * * * *"]
+  },
+  "browser": {
+    "binding": "BROWSER"
+  }
+}
