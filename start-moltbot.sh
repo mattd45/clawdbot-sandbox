@@ -224,7 +224,7 @@ if (isOpenRouter) {
     config.models.providers = config.models.providers || {};
     config.models.providers.openai = {
         baseUrl: 'https://openrouter.ai/api/v1',
-        api: 'openai-chat',
+        api: 'openai-responses',
         models: [
             { id: 'moonshotai/kimi-k2.5', name: 'Kimi K2.5', contextWindow: 262144 },
             { id: 'moonshotai/kimi-k2-thinking', name: 'Kimi K2 Thinking', contextWindow: 131072 },
@@ -293,7 +293,7 @@ if (isOpenRouter) {
     config.models.providers = config.models.providers || {};
     config.models.providers.openai = {
         baseUrl: 'https://openrouter.ai/api/v1',
-        api: 'openai-chat',
+        api: 'openai-responses',
         apiKey: process.env.OPENROUTER_API_KEY,
         models: [
             { id: 'moonshotai/kimi-k2.5', name: 'Kimi K2.5', contextWindow: 262144 },
