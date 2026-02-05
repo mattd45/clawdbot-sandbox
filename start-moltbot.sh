@@ -227,8 +227,8 @@ if (isOpenRouter) {
         baseUrl: openRouterBaseUrl,
         api: 'openai-chat',
         models: [
-            { id: 'moonshotai/kimi-k2', name: 'Kimi K2.5', contextWindow: 131072 },
-            { id: 'moonshotai/kimi-k2-instruct', name: 'Kimi K2.5 Instruct', contextWindow: 131072 },
+            { id: 'moonshotai/kimi-k2.5', name: 'Kimi K2.5', contextWindow: 262144 },
+            { id: 'moonshotai/kimi-k2-thinking', name: 'Kimi K2 Thinking', contextWindow: 131072 },
         ]
     };
     // Include API key in provider config
@@ -239,9 +239,9 @@ if (isOpenRouter) {
     }
     // Add models to the allowlist so they appear in /models
     config.agents.defaults.models = config.agents.defaults.models || {};
-    config.agents.defaults.models['openrouter/moonshotai/kimi-k2'] = { alias: 'Kimi K2.5' };
-    config.agents.defaults.models['openrouter/moonshotai/kimi-k2-instruct'] = { alias: 'Kimi K2.5 Instruct' };
-    config.agents.defaults.model.primary = 'openrouter/moonshotai/kimi-k2';
+    config.agents.defaults.models['openrouter/moonshotai/kimi-k2.5'] = { alias: 'Kimi K2.5' };
+    config.agents.defaults.models['openrouter/moonshotai/kimi-k2-thinking'] = { alias: 'Kimi K2 Thinking' };
+    config.agents.defaults.model.primary = 'openrouter/moonshotai/kimi-k2.5';
 } else if (isOpenAI) {
     // Create custom openai provider config with baseUrl override
     // Omit apiKey so moltbot falls back to OPENAI_API_KEY env var
@@ -297,14 +297,14 @@ if (isOpenRouter) {
         api: 'openai-chat',
         apiKey: process.env.OPENROUTER_API_KEY,
         models: [
-            { id: 'moonshotai/kimi-k2', name: 'Kimi K2.5', contextWindow: 131072 },
-            { id: 'moonshotai/kimi-k2-instruct', name: 'Kimi K2.5 Instruct', contextWindow: 131072 },
+            { id: 'moonshotai/kimi-k2.5', name: 'Kimi K2.5', contextWindow: 262144 },
+            { id: 'moonshotai/kimi-k2-thinking', name: 'Kimi K2 Thinking', contextWindow: 131072 },
         ]
     };
     config.agents.defaults.models = config.agents.defaults.models || {};
-    config.agents.defaults.models['openrouter/moonshotai/kimi-k2'] = { alias: 'Kimi K2.5' };
-    config.agents.defaults.models['openrouter/moonshotai/kimi-k2-instruct'] = { alias: 'Kimi K2.5 Instruct' };
-    config.agents.defaults.model.primary = 'openrouter/moonshotai/kimi-k2';
+    config.agents.defaults.models['openrouter/moonshotai/kimi-k2.5'] = { alias: 'Kimi K2.5' };
+    config.agents.defaults.models['openrouter/moonshotai/kimi-k2-thinking'] = { alias: 'Kimi K2 Thinking' };
+    config.agents.defaults.model.primary = 'openrouter/moonshotai/kimi-k2.5';
 } else {
     // Default to Anthropic without custom base URL (uses built-in pi-ai catalog)
     config.agents.defaults.model.primary = 'anthropic/claude-opus-4-5';
