@@ -218,13 +218,12 @@ const isOpenRouter = baseUrl.includes('openrouter.ai') || baseUrl.endsWith('/ope
 const isOpenAI = baseUrl.endsWith('/openai') && !isOpenRouter;
 
 if (isOpenRouter) {
-    // Configure OpenRouter provider with Kimi K2.5 models
-    console.log('Configuring OpenRouter provider with Kimi K2.5 models');
-    const openRouterBaseUrl = 'https://openrouter.ai/api/v1';
+    // Configure OpenRouter as OpenAI provider (OpenRouter uses OpenAI-compatible API)
+    console.log('Configuring OpenRouter (via OpenAI provider) with Kimi K2.5 models');
     config.models = config.models || {};
     config.models.providers = config.models.providers || {};
-    config.models.providers.openrouter = {
-        baseUrl: openRouterBaseUrl,
+    config.models.providers.openai = {
+        baseUrl: 'https://openrouter.ai/api/v1',
         api: 'openai-chat',
         models: [
             { id: 'moonshotai/kimi-k2.5', name: 'Kimi K2.5', contextWindow: 262144 },
@@ -233,15 +232,15 @@ if (isOpenRouter) {
     };
     // Include API key in provider config
     if (process.env.OPENROUTER_API_KEY) {
-        config.models.providers.openrouter.apiKey = process.env.OPENROUTER_API_KEY;
+        config.models.providers.openai.apiKey = process.env.OPENROUTER_API_KEY;
     } else if (process.env.OPENAI_API_KEY) {
-        config.models.providers.openrouter.apiKey = process.env.OPENAI_API_KEY;
+        config.models.providers.openai.apiKey = process.env.OPENAI_API_KEY;
     }
     // Add models to the allowlist so they appear in /models
     config.agents.defaults.models = config.agents.defaults.models || {};
-    config.agents.defaults.models['openrouter/moonshotai/kimi-k2.5'] = { alias: 'Kimi K2.5' };
-    config.agents.defaults.models['openrouter/moonshotai/kimi-k2-thinking'] = { alias: 'Kimi K2 Thinking' };
-    config.agents.defaults.model.primary = 'openrouter/moonshotai/kimi-k2.5';
+    config.agents.defaults.models['openai/moonshotai/kimi-k2.5'] = { alias: 'Kimi K2.5' };
+    config.agents.defaults.models['openai/moonshotai/kimi-k2-thinking'] = { alias: 'Kimi K2 Thinking' };
+    config.agents.defaults.model.primary = 'openai/moonshotai/kimi-k2.5';
 } else if (isOpenAI) {
     // Create custom openai provider config with baseUrl override
     // Omit apiKey so moltbot falls back to OPENAI_API_KEY env var
@@ -289,10 +288,10 @@ if (isOpenRouter) {
     config.agents.defaults.model.primary = 'anthropic/claude-opus-4-5-20251101';
 } else if (process.env.OPENROUTER_API_KEY) {
     // Default to OpenRouter with Kimi K2.5 if OPENROUTER_API_KEY is set but no base URL
-    console.log('Configuring OpenRouter provider with Kimi K2.5 (default)');
+    console.log('Configuring OpenRouter (via OpenAI provider) with Kimi K2.5 (default)');
     config.models = config.models || {};
     config.models.providers = config.models.providers || {};
-    config.models.providers.openrouter = {
+    config.models.providers.openai = {
         baseUrl: 'https://openrouter.ai/api/v1',
         api: 'openai-chat',
         apiKey: process.env.OPENROUTER_API_KEY,
@@ -302,9 +301,9 @@ if (isOpenRouter) {
         ]
     };
     config.agents.defaults.models = config.agents.defaults.models || {};
-    config.agents.defaults.models['openrouter/moonshotai/kimi-k2.5'] = { alias: 'Kimi K2.5' };
-    config.agents.defaults.models['openrouter/moonshotai/kimi-k2-thinking'] = { alias: 'Kimi K2 Thinking' };
-    config.agents.defaults.model.primary = 'openrouter/moonshotai/kimi-k2.5';
+    config.agents.defaults.models['openai/moonshotai/kimi-k2.5'] = { alias: 'Kimi K2.5' };
+    config.agents.defaults.models['openai/moonshotai/kimi-k2-thinking'] = { alias: 'Kimi K2 Thinking' };
+    config.agents.defaults.model.primary = 'openai/moonshotai/kimi-k2.5';
 } else {
     // Default to Anthropic without custom base URL (uses built-in pi-ai catalog)
     config.agents.defaults.model.primary = 'anthropic/claude-opus-4-5';
